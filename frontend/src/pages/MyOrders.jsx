@@ -10,7 +10,7 @@ export default function MyOrders() {
     const formatPrice = (value) => Number(value || 0).toFixed(2);
 
     useEffect(() => {
-        if (user === null) return; // attend le chargement du user (même s’il est null)
+        if (user === null) return;
 
         const fetchOrders = async () => {
             if (!user) {
@@ -36,7 +36,6 @@ export default function MyOrders() {
 
         fetchOrders();
     }, [user]);
-
 
     if (error) {
         return <p style={{ color: 'red', padding: '2rem' }}>{error}</p>;
@@ -75,31 +74,51 @@ export default function MyOrders() {
                                     key={index}
                                     style={{
                                         display: 'flex',
-                                        alignItems: 'center',
-                                        marginBottom: 10,
+                                        flexDirection: 'column',
+                                        marginBottom: 14,
                                         borderBottom: '1px dashed #ccc',
-                                        paddingBottom: 8
+                                        paddingBottom: 10
                                     }}
                                 >
-                                    {product.image && (
-                                        <img
-                                            src={product.image}
-                                            alt={product.product}
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {product.image && (
+                                            <img
+                                                src={product.image}
+                                                alt={product.product}
+                                                style={{
+                                                    width: 50,
+                                                    height: 50,
+                                                    objectFit: 'cover',
+                                                    borderRadius: 8,
+                                                    marginRight: 12,
+                                                    border: '1px solid #ccc',
+                                                }}
+                                            />
+                                        )}
+                                        <span>
+                                            {product.quantity} × {product.product} — <strong>{formatPrice(product.price)} €</strong>
+                                        </span>
+                                    </div>
+
+                                    {/* Bouton Laisser un avis */}
+                                    {product.productId && (
+                                        <button
+                                            onClick={() => navigate(`/avis/${product.productId}`)}
                                             style={{
-                                                width: 50,
-                                                height: 50,
-                                                objectFit: 'cover',
-                                                borderRadius: 8,
-                                                marginRight: 12,
-                                                border: '1px solid #ccc',
+                                                marginTop: 6,
+                                                alignSelf: 'flex-start',
+                                                padding: '0.4rem 0.8rem',
+                                                background: '#ffb0cd',
+                                                color: '#000',
+                                                border: 'none',
+                                                borderRadius: '20px',
+                                                fontSize: '0.85rem',
+                                                cursor: 'pointer'
                                             }}
-                                        />
+                                        >
+                                            ✍️ Laisser un avis
+                                        </button>
                                     )}
-                                    <span>
-                                        {product.quantity} × {product.product} — <strong>{formatPrice(product.price)} €</strong>
-
-
-                                    </span>
                                 </li>
                             ))}
                         </ul>
@@ -125,7 +144,5 @@ export default function MyOrders() {
                 ⬅ Retour à l'accueil
             </button>
         </div>
-
-
     );
 }

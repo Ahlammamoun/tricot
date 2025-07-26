@@ -18,3 +18,7 @@ services:
     App\Service\StripeCheckoutService:
         arguments:
             $stripeSecretKey: '%stripe.secret_key%'  # ✅ ici aussi
+
+    App\EventSubscriber\JwtLoginSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }

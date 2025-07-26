@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\Avis;
 use App\Entity\CommandeProduit;
 use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
@@ -100,6 +101,7 @@ class OrderFromCartController extends AbstractController
                 // dd($item->getProduit()); 
                 $product = $item->getProduit();
                 $items[] = [
+                    'productId' => $product->getId(),
                     'product' => $product->getNom(),
                     'quantity' => $item->getQuantite(),
                     'price' => $item->getPrixUnitaire(),
@@ -118,7 +120,55 @@ class OrderFromCartController extends AbstractController
                 'status' => $order->getStatus(),
             ];
         }
-// dd($response);
+        // dd($response);
         return new JsonResponse($response);
     }
+
+
+#[Route('/api/avis', name: 'post_avis', methods: ['POST'])]
+#[IsGranted('ROLE_USER')]
+public function postAvis(
+    Request $request,
+    EntityManagerInterface $em,
+    ProduitRepository $produitRepo
+): JsonResponse {
+    $data = json_decode($request->getContent(), true);
+    $user = $this->getUser();
+
+    $produitId = $data['produit_id'] ?? null;
+    $commentaire = trim($data['commentaire'] ?? '');
+    $note = (int) ($data['note'] ?? 0);
+
+    if (!$produitId || $note < 1 || $note > 5 || $commentaire === '') {
+        return new JsonResponse(['error' => 'Données invalides'], 400);
+    }
+
+    $produit = $produitRepo->find($produitId);
+    if (!$produit) {
+        return new JsonResponse(['error' => 'Produit introuvable'], 404);
+    }
+
+    // 🔒 Vérifie si un avis existe déjà pour ce couple utilisateur/produit
+    $existing = $em->getRepository(\App\Entity\Avis::class)->findOneBy([
+        'utilisateur' => $user,
+        'produit' => $produit,
+    ]);
+
+    if ($existing) {
+        return new JsonResponse(['error' => 'Vous avez déjà laissé un avis pour ce produit.'], 409);
+    }
+
+    $avis = new \App\Entity\Avis();
+    $avis->setProduit($produit);
+    $avis->setUtilisateur($user);
+    $avis->setCommentaire($commentaire);
+    $avis->setNote($note);
+    $avis->setCreatedAt(new \DateTimeImmutable());
+
+    $em->persist($avis);
+    $em->flush();
+
+    return new JsonResponse(['success' => true], 201);
+}
+
 }

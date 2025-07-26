@@ -218,10 +218,10 @@ const styles = {
     maxWidth: '1100px',
     margin: '0 auto',
     background: 'radial-gradient(circle at 20% 30%, #1a1a1a, #000)',
-    color: '#ff69b4',
+    color: '#FFC660',
     fontFamily: 'Poppins, sans-serif',
     borderRadius: '1rem',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
     boxShadow: '0 0 30px rgba(255,105,180,0.2)',
   },
 
@@ -230,7 +230,7 @@ const styles = {
     fontSize: '2.2rem',
     textAlign: 'center',
     fontFamily: 'Playfair Display, serif',
-    color: '#ff69b4',
+    color: '#FFC660',
     textShadow: '0 0 10px rgba(255,105,180,0.5)',
   },
 
@@ -267,14 +267,14 @@ const styles = {
     backgroundColor: '#111',
     padding: '1rem',
     borderRadius: '12px',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
     boxShadow: '0 0 10px rgba(255,105,180,0.15)',
   },
 
   removeBtn: {
     background: 'transparent',
     border: 'none',
-    color: '#ff4f81',
+    color: '#FFC660',
     fontSize: '1.4rem',
     cursor: 'pointer',
     fontWeight: 'bold',
@@ -290,12 +290,12 @@ const styles = {
 
   continueBtn: {
     padding: '1rem 2rem',
-    border: '2px solid #ff69b4',
+    border: '2px solid #FFC660',
     borderRadius: '12px',
     cursor: 'pointer',
     fontSize: '1.1rem',
     background: '#000',
-    color: '#ff69b4',
+    color: '#FFC660',
     width: '100%',
     marginTop: '1rem',
     fontWeight: 'bold',
@@ -307,14 +307,14 @@ const styles = {
     backgroundColor: '#111',
     padding: '1.5rem',
     borderRadius: '12px',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
     boxShadow: '0 0 10px rgba(255,105,180,0.15)',
   },
 
   deliveryTitle: {
     marginBottom: '1.5rem',
     fontSize: '1.5rem',
-    color: '#ff69b4',
+    color: '#FFC660',
     textAlign: 'center',
     fontFamily: 'Playfair Display, serif',
     textShadow: '0 0 8px rgba(255, 105, 180, 0.3)',
@@ -325,7 +325,7 @@ const styles = {
     marginBottom: '0.25rem',
     display: 'block',
     fontSize: '0.95rem',
-    color: '#ff69b4',
+    color: '#FFC660',
   },
 
   input: {
@@ -333,7 +333,7 @@ const styles = {
     width: '100%',
     padding: '0.75rem',
     borderRadius: '8px',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
     marginBottom: '1rem',
     fontSize: '1rem',
     backgroundColor: '#000',
@@ -343,7 +343,7 @@ const styles = {
   payBtn: {
     marginTop: '1rem',
     padding: '1rem 2rem',
-    background: '#ff69b4',
+    background: '#FFC660',
     color: '#000',
     border: '2px solid #fff',
     borderRadius: '12px',

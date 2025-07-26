@@ -6,7 +6,21 @@ const Produit = () => {
   const { id } = useParams();
   const [produit, setProduit] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const { addToCart } = useCart();
+  const [avis, setAvis] = useState([]);
+
+  const moyenneNote =
+    avis.length > 0
+      ? (avis.reduce((acc, avisItem) => acc + avisItem.note, 0) / avis.length).toFixed(1)
+      : null;
+
+  useEffect(() => {
+    fetch(`/api/avis/produit/${id}`)
+      .then(res => res.json())
+      .then(data => setAvis(data))
+      .catch(console.error);
+  }, [id]);
 
   useEffect(() => {
     fetch(`/api/produits/${id}`)
@@ -17,13 +31,15 @@ const Produit = () => {
 
   if (!produit) return <p style={{ padding: '2rem', color: '#e37b26' }}>Chargement...</p>;
 
+  const allImages = [produit.image, ...(produit.images || []).map(img => img.path || img)];
+
   return (
     <>
       <style>{`
         .produit-container {
           padding: 2rem;
-          background: linear-gradient(160deg, #0c0c0c, #1a1a1a);
-          color: #ff69b4;
+          background: #FAFAFA;
+          color: black;
           font-family: 'Poppins', sans-serif;
           letter-spacing: 0.03em;
           min-height: 100vh;
@@ -43,8 +59,8 @@ const Produit = () => {
           width: 100%;
           max-width: 320px;
           border-radius: 14px;
-          border: 3px solid #ff69b4;
-          box-shadow: 0 0 18px rgba(255, 105, 180, 0.4);
+          border: 3px solid #FFC660;
+          box-shadow: 0 0 18px #FFC660;
           display: block;
           cursor: pointer;
         }
@@ -65,7 +81,7 @@ const Produit = () => {
           margin-bottom: 1.2rem;
           font-size: 1.05rem;
           line-height: 1.6;
-          color: #ffc0cb;
+          color: black;
         }
 
         .produit-back {
@@ -74,7 +90,7 @@ const Produit = () => {
         }
 
         .produit-back a {
-          background-color: #ff69b4;
+          background-color: #FFC660;
           color: #000;
           padding: 0.9rem 1.6rem;
           border-radius: 14px;
@@ -86,12 +102,12 @@ const Produit = () => {
         }
 
         .produit-back a:hover {
-          background-color: #ff85c1;
+          background-color: #FFC660;
           transform: scale(1.05);
         }
 
         .btn-panier {
-          background: linear-gradient(145deg, #ff69b4, #d94884);
+          background: linear-gradient(145deg, #FFC660, #FFC660);
           color: #000;
           border: 2px solid #000;
           padding: 0.9rem 1.6rem;
@@ -100,16 +116,15 @@ const Produit = () => {
           border-radius: 14px;
           cursor: pointer;
           margin-top: 1rem;
-          box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+          box-shadow: 0 0 12px #FFC660;
           transition: all 0.3s ease-in-out;
           font-family: 'Poppins', sans-serif;
           letter-spacing: 0.03em;
         }
 
         .btn-panier:hover {
-          background: linear-gradient(145deg, #ff85c1, #e94e90);
           transform: scale(1.05);
-          box-shadow: 0 0 18px rgba(255, 105, 180, 0.6);
+          box-shadow: 0 0 18px #dFFC66014350;
         }
 
         @media (min-width: 769px) {
@@ -134,26 +149,36 @@ const Produit = () => {
               src={produit.image}
               alt={produit.nom}
               className="produit-img"
-              onClick={() => setSelectedImage(produit.image)}
+              onClick={() => {
+                setSelectedIndex(0);
+                setSelectedImage(allImages[0]);
+              }}
             />
             {produit.images && produit.images.length > 0 && (
               <div style={{ marginTop: '1rem', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                {produit.images.map((imgObj, i) => (
-                  <img
-                    key={i}
-                    src={imgObj.path || imgObj} // support object or string path
-                    alt={`supp-${i}`}
-                    style={{
-                      width: '80px',
-                      height: '80px',
-                      objectFit: 'cover',
-                      borderRadius: '8px',
-                      border: '2px solid #ff69b4',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => setSelectedImage(imgObj.path || imgObj)}
-                  />
-                ))}
+                {produit.images.map((imgObj, i) => {
+                  const imagePath = imgObj.path || imgObj;
+                  const index = i + 1; // +1 because produit.image is at index 0
+                  return (
+                    <img
+                      key={i}
+                      src={imagePath}
+                      alt={`supp-${i}`}
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'cover',
+                        borderRadius: '8px',
+                        border: '2px solid #FFC660',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => {
+                        setSelectedIndex(index);
+                        setSelectedImage(allImages[index]);
+                      }}
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
@@ -163,6 +188,9 @@ const Produit = () => {
             <p><strong>Description :</strong> {produit.description}</p>
             <p><strong>Catégorie :</strong> {produit.categorie}</p>
 
+            {moyenneNote && (
+              <p><strong></strong> ⭐ {moyenneNote} / 5</p>
+            )}
             <button className="btn-panier" onClick={() => addToCart(produit)}>
               + Panier
             </button>
@@ -185,9 +213,30 @@ const Produit = () => {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 9999,
-            cursor: 'pointer',
           }}
         >
+          {selectedIndex > 0 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIndex = selectedIndex - 1;
+                setSelectedIndex(newIndex);
+                setSelectedImage(allImages[newIndex]);
+              }}
+              style={{
+                position: 'absolute',
+                left: '5%',
+                fontSize: '3rem',
+                color: 'white',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              ‹
+            </button>
+          )}
+
           <img
             src={selectedImage}
             alt="Zoom"
@@ -195,10 +244,32 @@ const Produit = () => {
               maxWidth: '90%',
               maxHeight: '90%',
               borderRadius: '12px',
-              border: '3px solid #ff69b4',
+              border: '3px solid #FFC660',
               boxShadow: '0 0 20px rgba(255,255,255,0.4)',
             }}
           />
+
+          {selectedIndex < allImages.length - 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIndex = selectedIndex + 1;
+                setSelectedIndex(newIndex);
+                setSelectedImage(allImages[newIndex]);
+              }}
+              style={{
+                position: 'absolute',
+                right: '5%',
+                fontSize: '3rem',
+                color: 'white',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              ›
+            </button>
+          )}
         </div>
       )}
     </>

@@ -17,6 +17,7 @@ const Layout = () => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+      
     },
     content: {
       flex: 1,

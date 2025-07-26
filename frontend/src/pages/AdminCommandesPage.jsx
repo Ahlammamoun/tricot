@@ -59,7 +59,7 @@ const AdminCommandesPage = () => {
   };
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif', backgroundColor: 'black', color:'#FFC660' }}>
       <h1 style={{ marginBottom: '1rem' }}>📦 Gestion des commandes</h1>
 
       {loading ? (
@@ -67,7 +67,7 @@ const AdminCommandesPage = () => {
       ) : (
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '2rem' }}>
           <thead>
-            <tr style={{ backgroundColor: 'darkgrey' }}>
+            <tr style={{ backgroundColor: 'black' }}>
               <th style={cellStyle}>ID</th>
               <th style={cellStyle}>Email</th>
               <th style={cellStyle}>Date</th>

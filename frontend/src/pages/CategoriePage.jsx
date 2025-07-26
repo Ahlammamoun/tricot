@@ -34,19 +34,19 @@ const CategoriePage = () => {
   return (
     <div style={{
       padding: '2rem',
-      backgroundColor: '#0a0a0a',
+      backgroundColor: '#FAFAFA',
       minHeight: '100vh',
-      color: '#ff69b4',
+      color: 'black',
       fontFamily: 'Poppins, sans-serif'
     }}>
       <style>{`
         .card-sexy {
           background: #111;
-          border: 2px solid #ff69b4;
+          border: 2px solid #FFC660;
           border-radius: 12px;
           padding: 1rem;
           width: 200px;
-          box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+          box-shadow: 0 0 15px #FFC660;
           display: flex;
           flex-direction: column;
           transition: transform 0.2s ease;
@@ -61,12 +61,12 @@ const CategoriePage = () => {
           height: 180px;
           object-fit: contain;
           border-radius: 8px;
-          background: #ff69b4;
+          background: #FFC660;
           margin-bottom: 0.6rem;
         }
 
         .btn-panier {
-          background: #ff69b4;
+          background: #FFC660;
           color: #000;
           border: none;
           padding: 0.5rem 0.9rem;
@@ -77,13 +77,13 @@ const CategoriePage = () => {
         }
 
         .btn-panier:hover {
-          background: #ff85c1;
+          background: #FFC660;
         }
 
         .select-style {
           background: #111;
-          color: #ff69b4;
-          border: 1px solid #ff69b4;
+          color: #FFC660;
+          border: 1px #FFC660;
           border-radius: 25px;
           padding: 0.5rem 1rem;
           text-align: center;
@@ -97,7 +97,7 @@ const CategoriePage = () => {
       </h1>
 
       <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-        <Link to="/" style={{ color: '#ff69b4', textDecoration: 'none' }}>
+        <Link to="/" style={{ color: '#FFC660', textDecoration: 'none' }}>
           ⬅ Retour à l’accueil
         </Link>
       </div>
@@ -126,13 +126,15 @@ const CategoriePage = () => {
       }}>
         {produits.map(prod => (
           <div className="card-sexy" key={prod.id}>
-            <img src={prod.image} alt={prod.nom} className="image-sexy" />
-            <h3 style={{ margin: '0.5rem 0', fontSize: '1rem' }}>{prod.nom}</h3>
-            <p style={{ margin: 0 }}>{prod.prix} €</p>
+            <Link to={`/produit/${prod.id}`} style={{ color: '#FFC660', fontWeight: 'bold', textDecoration: 'none' }}>
+              <img src={prod.image} alt={prod.nom} className="image-sexy" />
+              <h3 style={{ margin: '0.5rem 0', fontSize: '1rem' }}>{prod.nom}</h3>
+              <p style={{ margin: 0 }}>{prod.prix} €</p>
+            </Link>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
-              <Link to={`/produit/${prod.id}`} style={{ color: '#ff69b4', fontWeight: 'bold', textDecoration: 'none' }}>
-                Détail
-              </Link>
+
+
+
               <button
                 className="btn-panier"
                 onClick={() => {

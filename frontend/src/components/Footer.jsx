@@ -15,7 +15,7 @@ const Footer = () => {
       color: 'black', // Rose clair
       fontFamily: 'Poppins, sans-serif',
       fontSize: '0.9rem',
-  
+
     },
     navLinks: {
       listStyle: 'none',
@@ -33,13 +33,32 @@ const Footer = () => {
       fontSize: '1rem',
       transition: 'color 0.3s, text-shadow 0.3s',
     },
+    paymentLogos: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '1rem',
+      marginTop: '1.5rem',
+      flexWrap: 'wrap',
+    },
+    paymentIcon: {
+      height: '30px',
+      objectFit: 'contain',
+      opacity: 0.8,
+      transition: 'transform 0.2s ease',
+    },
+
   };
 
 
   return (
     <>
       <div style={styles.footer}>
-        <p>&copy; 2025 <strong style={{ color: '#ff69b4' }}>Stitch & Dreams</strong>. Tous droits réservés.</p>
+     <div style={styles.paymentLogos}>
+          <img src="/images/paiements/visa.png" alt="Visa" style={styles.paymentIcon} />
+          <img src="/images/paiements/mastercard.png" alt="Mastercard" style={styles.paymentIcon} />
+          <img src="/images/paiements/paypal.png" alt="PayPal" style={styles.paymentIcon} />
+        </div>
         <ul style={styles.navLinks}>
           <li>
             <Link to="/" style={styles.link} onMouseEnter={(e) => e.target.style.textShadow = '0 0 8px #ff69b4'} onMouseLeave={(e) => e.target.style.textShadow = 'none'}>
@@ -57,8 +76,16 @@ const Footer = () => {
             </Link>
           </li>
         </ul>
+   
+
+
+            <p>&copy; 2025 <strong style={{ color: '#d14350' }}>Stitch & Dreams</strong>. Tous droits réservés.</p>
       </div>
+
+          
       <div style={styles.frameBottom}></div>
+
+      
     </>
   );
 };

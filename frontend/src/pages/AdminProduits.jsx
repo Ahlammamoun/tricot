@@ -203,7 +203,7 @@ const AdminProduits = () => {
   const sousCategories = categories.flatMap((cat) => cat.sousCategories || []);
 
   return (
-    <div style={{ padding: '2rem', backgroundColor: '#000', color: '#ff69b4' }}>
+    <div style={{ padding: '2rem', backgroundColor: '#000', color: '#FFC660' }}>
       <h2 style={{ textAlign: 'center', fontFamily: 'Playfair Display, serif' }}>Admin Produits</h2>
 
       <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
@@ -393,17 +393,17 @@ const styles = {
     padding: '0.8rem',
     width: '90%',
     borderRadius: '10px',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
     backgroundColor: '#0f0f0f',
     color: '#fff',
     fontSize: '1rem',
     fontFamily: 'Poppins, sans-serif',
   },
   button: {
-    backgroundColor: '#ff69b4',
+    backgroundColor: '#FFC660',
     color: '#000',
     padding: '0.8rem 1.5rem',
-    border: '2px solid #ff69b4',
+    border: '2px solid #FFC660',
     borderRadius: '12px',
     cursor: 'pointer',
     display: 'block',
@@ -418,13 +418,13 @@ const styles = {
     backgroundColor: '#111',
     color: '#fff',
     fontFamily: 'Poppins, sans-serif',
-    border: '1px solid #ff69b4',
+    border: '1px solid #FFC660',
   },
   action: {
     marginRight: '0.6rem',
     background: 'none',
     border: 'none',
-    color: '#ff69b4',
+    color: '#FFC660',
     cursor: 'pointer',
     fontSize: '1.3rem',
     transition: 'color 0.3s ease',

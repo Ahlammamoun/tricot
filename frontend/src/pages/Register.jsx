@@ -113,7 +113,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '60vh',
-    background: 'radial-gradient(circle at 20% 30%, #1a1a1a, #000)',
+    background: '#FAFAFA',
     padding: '2rem',
   },
 
@@ -124,13 +124,13 @@ const styles = {
     boxShadow: '0 0 20px rgba(255, 105, 180, 0.3)',
     width: '100%',
     maxWidth: '400px',
-    border: '1px solid #FFC660',
+    border: '1px solid #d14350 ',
   },
 
   title: {
     textAlign: 'center',
     marginBottom: '1.5rem',
-    color: '#FFC660',
+    color: '#d14350 ',
     fontFamily: 'Playfair Display, serif',
     fontSize: '2rem',
     textShadow: '0 0 10px rgba(255, 105, 180, 0.3)',
@@ -147,7 +147,7 @@ const styles = {
     padding: '0.9rem',
     marginBottom: '1.2rem',
     borderRadius: '10px',
-    border: '1px solid #FFC660',
+    border: '1px solid #d14350',
     fontSize: '1rem',
     backgroundColor: '#000',
     color: '#fff',
@@ -157,7 +157,7 @@ const styles = {
 
   button: {
     width: '100%',
-    backgroundColor: '#FFC660',
+    backgroundColor: '#d14350 ',
     color: '#000',
     padding: '0.9rem',
     borderRadius: '12px',

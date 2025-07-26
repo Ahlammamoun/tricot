@@ -71,7 +71,7 @@ const AdminUsers = () => {
     };
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '100%', overflowX: 'auto' }}>
+        <div style={{ padding: '2rem', maxWidth: '100%', overflowX: 'auto', backgroundColor: 'black', color: '#FFC660' }}>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Gestion des utilisateurs</h2>
             {message && <p style={{ color: 'green' }}>{message}</p>}
 
@@ -83,6 +83,7 @@ const AdminUsers = () => {
                     flexWrap: 'wrap',
                     gap: '1rem',
                     alignItems: 'center',
+
                 }}
             >
                 <input

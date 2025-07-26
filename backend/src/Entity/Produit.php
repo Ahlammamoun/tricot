@@ -39,7 +39,13 @@ class Produit
     private Collection $commandeProduits;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ProductImage::class, cascade: ['persist', 'remove'])]
+
     private Collection $images;
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Avis::class, orphanRemoval: true)]
+    private Collection $avis;
+
+    #[ORM\Column(type: 'integer')]
+    private ?int $stock = null;
     public function __construct()
     {
         $this->commandeProduits = new ArrayCollection();
@@ -164,6 +170,22 @@ class Produit
             }
         }
 
+        return $this;
+    }
+
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
         return $this;
     }
 

@@ -17,6 +17,8 @@ import MyOrders from './pages/MyOrders';
 import AdminCommandesPage from './pages/AdminCommandesPage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
+import AvisForm from './pages/AvisForm';
+import AdminStats from './pages/AdminStats';
 
 
 function App() {
@@ -52,11 +54,19 @@ function App() {
                   </PrivateRoute>
                 }
               />
-                  <Route
+              <Route
                 path="/admin/commandes"
                 element={
                   <PrivateRoute adminOnly>
                     <AdminCommandesPage />
+                  </PrivateRoute>
+                }
+              />
+                   <Route
+                path="/admin/stats"
+                element={
+                  <PrivateRoute adminOnly>
+                    <AdminStats />
                   </PrivateRoute>
                 }
               />
@@ -69,6 +79,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/payment/cancel" element={<PaymentCancel />} />
+              <Route path="/avis/:id" element={<AvisForm />} />
             </Route>
           </Routes>
         </Router>

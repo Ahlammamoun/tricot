@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProduitRepository;
+use App\Repository\AvisRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,5 +31,42 @@ public function show(int $id, ProduitRepository $produitRepository): JsonRespons
         'categorie' => $produit->getCategorie()?->getNom()
     ]);
 }
+
+
+#[Route('/api/avis/produit/{id}', name: 'avis_par_produit', methods: ['GET'])]
+public function avisParProduit(int $id, AvisRepository $avisRepo): JsonResponse {
+    $avis = $avisRepo->findBy(['produit' => $id], ['createdAt' => 'DESC']);
+
+    $data = array_map(fn($a) => [
+        'note' => $a->getNote(),
+        'commentaire' => $a->getCommentaire(),
+        'auteur' => $a->getUtilisateur()->getPrenom(),
+        'date' => $a->getCreatedAt()->format('Y-m-d'),
+    ], $avis);
+
+    return new JsonResponse($data);
+}
+
+#[Route('/api/avis', name: 'all_avis', methods: ['GET'])]
+public function allAvis(AvisRepository $avisRepo): JsonResponse {
+    $avis = $avisRepo->findBy([], ['createdAt' => 'DESC'], 5);
+
+    $data = array_map(fn($a) => [
+        'note' => $a->getNote(),
+        'commentaire' => $a->getCommentaire(),
+        'auteur' => $a->getUtilisateur()?->getPrenom(),
+        'date' => $a->getCreatedAt()?->format('Y-m-d'),
+        'produit' => [
+            'id' => $a->getProduit()?->getId(),
+            'nom' => $a->getProduit()?->getNom(),
+            'image' => $a->getProduit()?->getImage(),
+        ]
+    ], $avis);
+
+    return new JsonResponse($data);
+}
+
+
+
 
 }

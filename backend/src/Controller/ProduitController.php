@@ -7,7 +7,8 @@ use App\Repository\AvisRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Avis;
 
 class ProduitController extends AbstractController
 {
@@ -25,6 +26,7 @@ public function show(int $id, ProduitRepository $produitRepository): JsonRespons
         'id' => $produit->getId(),
         'nom' => $produit->getNom(),
         'prix' => $produit->getPrix(),
+        'stock' => $produit->getStock(),
         'image' => $produit->getImage(),
         'images' => array_map(fn($img) => $img->getPath(), $produit->getImages()->toArray()), 
         'description' => $produit->getDescription(),
@@ -52,6 +54,7 @@ public function allAvis(AvisRepository $avisRepo): JsonResponse {
     $avis = $avisRepo->findBy([], ['createdAt' => 'DESC'], 5);
 
     $data = array_map(fn($a) => [
+        'id' => $a->getId(),
         'note' => $a->getNote(),
         'commentaire' => $a->getCommentaire(),
         'auteur' => $a->getUtilisateur()?->getPrenom(),
@@ -64,6 +67,24 @@ public function allAvis(AvisRepository $avisRepo): JsonResponse {
     ], $avis);
 
     return new JsonResponse($data);
+}
+
+#[Route('/api/avis/{id<\d+>}', name: 'delete_avis', methods: ['DELETE'])]
+public function delete(int $id, AvisRepository $avisRepo, EntityManagerInterface $em): JsonResponse
+{
+    // Optionnel : sécurité (admin uniquement)
+    // $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+    $avis = $avisRepo->find($id);
+
+    if (!$avis) {
+        return $this->json(['error' => 'Avis non trouvé'], 404);
+    }
+
+    $em->remove($avis);
+    $em->flush();
+
+    return $this->json(['success' => 'Avis supprimé avec succès.']);
 }
 
 

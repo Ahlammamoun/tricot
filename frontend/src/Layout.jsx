@@ -12,7 +12,7 @@ const Layout = () => {
       borderLeft: '12px solid #FF3364',    // Rose-Rouge
       borderRight: '12px solid #33FF61',   // Vert
       minHeight: '100vh',
-      color: '#FFB0CD',                    // Rose clair (texte global)
+      // color: '#FFB0CD',                    // Rose clair (texte global)
       fontFamily: 'Poppins, sans-serif',
       display: 'flex',
       flexDirection: 'column',

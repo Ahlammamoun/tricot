@@ -9,6 +9,8 @@ const Produit = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const { addToCart } = useCart();
   const [avis, setAvis] = useState([]);
+  const [showAvis, setShowAvis] = useState(false);
+
 
   const moyenneNote =
     avis.length > 0
@@ -141,7 +143,7 @@ const Produit = () => {
       `}</style>
 
       <div className="produit-container">
-        <h1>{produit.nom}</h1>
+        <h1 style={{ textAlign: 'center' }}>{produit.nom}</h1>
 
         <div className="produit-wrapper">
           <div className="produit-img-wrapper">
@@ -184,13 +186,35 @@ const Produit = () => {
           </div>
 
           <div className="produit-details">
-            <p><strong>Prix :</strong> {produit.prix} €</p>
-            <p><strong>Description :</strong> {produit.description}</p>
-            <p><strong>Catégorie :</strong> {produit.categorie}</p>
-
             {moyenneNote && (
-              <p><strong></strong> ⭐ {moyenneNote} / 5</p>
+              <p>
+                ⭐ {moyenneNote} / 5
+                {' '}
+                <button
+                  onClick={() => setShowAvis((prev) => !prev)}
+                  style={{
+                    background: 'none',
+                    color: '#FFC660',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    fontSize: '0.95rem',
+                    marginLeft: '8px'
+                  }}
+                >
+                  {showAvis ? 'Masquer les avis' : `Voir les avis (${avis.length})`}
+                </button>
+              </p>
             )}
+
+
+
+
+            <p>{produit.description}</p>
+            <p style={{ fontWeight: 'bold', fontSize: '1.5em' }}>{produit.prix} €</p>
+            {/* <p> {produit.categorie}</p> */}
+            <p><strong>Stock :</strong> {produit.stock}</p>
+
             <button className="btn-panier" onClick={() => addToCart(produit)}>
               + Panier
             </button>
@@ -200,7 +224,35 @@ const Produit = () => {
         <div className="produit-back">
           <Link to="/">Retour à l'accueil</Link>
         </div>
+
+
+        {showAvis && (
+          <div style={{ marginTop: '2rem', maxWidth: '800px' }}>
+            <h3 style={{ marginBottom: '1rem' }}>Avis clients</h3>
+            {avis.length === 0 ? (
+              <p>Aucun avis pour ce produit.</p>
+            ) : (
+              avis.map((a, i) => (
+                <div key={i} style={{
+                  padding: '1rem',
+                  marginBottom: '1rem',
+                  backgroundColor: '#f3f3f3',
+                  borderLeft: '4px solid #FFC660',
+                  borderRadius: '6px',
+                }}>
+                  <p><strong>{a.auteur}</strong> – ⭐ {a.note}/5</p>
+                  <p style={{ marginTop: '0.5rem' }}>{a.commentaire}</p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
+
+
+
       </div>
+
 
       {selectedImage && (
         <div

@@ -19,7 +19,11 @@ import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import AvisForm from './pages/AvisForm';
 import AdminStats from './pages/AdminStats';
-
+import ContactForm from './pages/ContactForm';
+import AdminContact from './pages/AdminContact';
+import AdminAvis from './pages/AdminAvis';
+import MentionsLegales from './pages/MentionsLegales';
+import CGV from './pages/CGV';
 
 function App() {
   return (
@@ -62,11 +66,27 @@ function App() {
                   </PrivateRoute>
                 }
               />
-                   <Route
+              <Route
                 path="/admin/stats"
                 element={
                   <PrivateRoute adminOnly>
                     <AdminStats />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin/contact"
+                element={
+                  <PrivateRoute adminOnly>
+                    <AdminContact />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin/avis"
+                element={
+                  <PrivateRoute adminOnly>
+                    <AdminAvis />
                   </PrivateRoute>
                 }
               />
@@ -80,6 +100,9 @@ function App() {
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/payment/cancel" element={<PaymentCancel />} />
               <Route path="/avis/:id" element={<AvisForm />} />
+              <Route path="/contact" element={<ContactForm />} />
+              <Route path="/conditions" element={<MentionsLegales />} />
+              <Route path="/conditions-generales-de-vente" element={<CGV />} />
             </Route>
           </Routes>
         </Router>

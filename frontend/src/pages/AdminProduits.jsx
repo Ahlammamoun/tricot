@@ -6,6 +6,7 @@ const AdminProduits = () => {
   const [form, setForm] = useState({
     nom: '',
     prix: '',
+    stock: '',
     description: '',
     image: '',
     images: [], // images supplémentaires
@@ -122,6 +123,7 @@ const AdminProduits = () => {
     const payload = {
       ...form,
       images: undefined, // Ne pas envoyer le tableau images ici
+      stock: parseInt(form.stock, 10),
     };
 
     try {
@@ -167,6 +169,7 @@ const AdminProduits = () => {
     setForm({
       nom: prod.nom || '',
       prix: prod.prix || '',
+      stock: prod.stock || '',
       description: prod.description || '',
       image: prod.image || '',
       images: prod.images || [],
@@ -223,6 +226,15 @@ const AdminProduits = () => {
           required
           style={styles.input}
         />
+        <input
+          type="number"
+          placeholder="Stock"
+          value={form.stock}
+          onChange={(e) => setForm({ ...form, stock: e.target.value })}
+          required
+          style={styles.input}
+        />
+
         <textarea
           placeholder="Description"
           value={form.description}
@@ -326,6 +338,7 @@ const AdminProduits = () => {
               <th>ID</th>
               <th>Nom</th>
               <th>Prix</th>
+              <th>Stock</th>
               <th>Description</th>
               <th>Catégorie</th>
               <th>Image</th>
@@ -339,6 +352,8 @@ const AdminProduits = () => {
                 <td>{prod.id}</td>
                 <td>{prod.nom}</td>
                 <td>{prod.prix}</td>
+                <td>{prod.stock}</td>
+
                 <td>{prod.description}</td>
                 <td>
                   {prod.categorie?.parent

@@ -25,6 +25,7 @@ class AdminProduitController extends AbstractController
             'id' => $p->getId(),
             'nom' => $p->getNom(),
             'prix' => $p->getPrix(),
+            'stock' => $p->getStock(),
             'image' => $p->getImage(),
             'images' => array_map(fn($img) => [
                 'id' => $img->getId(),
@@ -59,6 +60,8 @@ class AdminProduitController extends AbstractController
 
         $produit = new Produit();
         $produit->setNom($data['nom'] ?? '');
+        $produit->setStock($data['stock'] ?? 0);
+
         $produit->setPrix($data['prix'] ?? 0);
         $produit->setImage($data['image'] ?? '');
         $produit->setDescription($data['description'] ?? '');
@@ -90,6 +93,8 @@ class AdminProduitController extends AbstractController
         }
 
         $produit->setNom($data['nom'] ?? $produit->getNom());
+        $produit->setStock($data['stock'] ?? $produit->getStock());
+
         $produit->setPrix($data['prix'] ?? $produit->getPrix());
         $produit->setImage($data['image'] ?? $produit->getImage());
         $produit->setDescription($data['description'] ?? $produit->getDescription());
@@ -141,6 +146,7 @@ class AdminProduitController extends AbstractController
             'id' => $p->getId(),
             'nom' => $p->getNom(),
             'prix' => $p->getPrix(),
+            'stock' => $p->getStock(),
             'image' => $p->getImage(),
             'description' => $p->getDescription(),
             'categorie' => $p->getCategorie()

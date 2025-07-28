@@ -54,7 +54,7 @@ const Footer = () => {
   return (
     <>
       <div style={styles.footer}>
-     <div style={styles.paymentLogos}>
+        <div style={styles.paymentLogos}>
           <img src="/images/paiements/visa.png" alt="Visa" style={styles.paymentIcon} />
           <img src="/images/paiements/mastercard.png" alt="Mastercard" style={styles.paymentIcon} />
           <img src="/images/paiements/paypal.png" alt="PayPal" style={styles.paymentIcon} />
@@ -70,22 +70,27 @@ const Footer = () => {
               Mentions légales
             </Link>
           </li>
+            <li>
+            <Link to="/conditions-generales-de-vente" style={styles.link} onMouseEnter={(e) => e.target.style.textShadow = '0 0 8px #ff69b4'} onMouseLeave={(e) => e.target.style.textShadow = 'none'}>
+              Conditions Générales de Vente
+            </Link>
+          </li>
           <li>
             <Link to="/contact" style={styles.link} onMouseEnter={(e) => e.target.style.textShadow = '0 0 8px #ff69b4'} onMouseLeave={(e) => e.target.style.textShadow = 'none'}>
               Contact
             </Link>
           </li>
         </ul>
-   
 
 
-            <p>&copy; 2025 <strong style={{ color: '#d14350' }}>Stitch & Dreams</strong>. Tous droits réservés.</p>
+
+        <p>&copy; 2025 <strong style={{ color: '#d14350' }}>Stitch & Dreams</strong>. Tous droits réservés.</p>
       </div>
 
-          
+
       <div style={styles.frameBottom}></div>
 
-      
+
     </>
   );
 };

@@ -228,6 +228,9 @@ const Navbar = () => {
         <option value="/admin/utilisateurs">Utilisateurs</option>
         <option value="/admin/commandes">Commandes</option>
         <option value="/admin/stats">Statistiques</option>
+        <option value="/admin/contact">Message</option>
+
+        <option value="/admin/avis">Avis</option>
       </select>
     </li>
   );

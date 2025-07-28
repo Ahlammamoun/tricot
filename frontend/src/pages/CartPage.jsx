@@ -19,6 +19,8 @@ function CartPage() {
   const grandTotal = total + shippingCost;
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [acceptedConditions, setAcceptedConditions] = useState(false);
+  const [acceptedCGV, setAcceptedCGV] = useState(false);
+  const [acceptedMentions, setAcceptedMentions] = useState(false);
 
 
 
@@ -179,25 +181,38 @@ function CartPage() {
             />
 
             <div style={{ marginBottom: "1rem" }}>
-              <label style={{ fontSize: "0.95rem" }}>
+              <label style={{ fontSize: "0.95rem", display: "block", marginBottom: "0.5rem" }}>
                 <input
                   type="checkbox"
-                  checked={acceptedConditions}
-                  onChange={(e) => setAcceptedConditions(e.target.checked)}
+                  checked={acceptedCGV}
+                  onChange={(e) => setAcceptedCGV(e.target.checked)}
                   style={{ marginRight: "0.5rem" }}
                 />
-                J'accepte les <a href="/conditions" target="_blank" rel="noopener noreferrer">conditions légales</a>
+                J'accepte les <a href="/conditions-generales-de-vente" target="_blank" rel="noopener noreferrer">conditions générales de vente</a>
+              </label>
+
+              <label style={{ fontSize: "0.95rem", display: "block" }}>
+                <input
+                  type="checkbox"
+                  checked={acceptedMentions}
+                  onChange={(e) => setAcceptedMentions(e.target.checked)}
+                  style={{ marginRight: "0.5rem" }}
+                />
+                J'ai pris connaissance des <a href="/mentions-legales" target="_blank" rel="noopener noreferrer">mentions légales</a>
               </label>
             </div>
+
 
             <button
               onClick={handleCheckout}
               style={{
                 ...styles.payBtn,
-                background: isFormValid() && acceptedConditions ? "#880e4f" : "#ccc",
-                cursor: isFormValid() && acceptedConditions ? "pointer" : "not-allowed"
+                background: isFormValid() && acceptedCGV && acceptedMentions ? "#880e4f" : "#ccc",
+                cursor: isFormValid() && acceptedCGV && acceptedMentions ? "pointer" : "not-allowed"
+
               }}
-              disabled={!isFormValid() || !acceptedConditions}
+              disabled={!isFormValid() || !acceptedCGV || !acceptedMentions}
+
             >
               💳 Payer
             </button>

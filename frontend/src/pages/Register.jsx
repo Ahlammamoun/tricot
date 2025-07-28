@@ -124,13 +124,13 @@ const styles = {
     boxShadow: '0 0 20px rgba(255, 105, 180, 0.3)',
     width: '100%',
     maxWidth: '400px',
-    border: '1px solid #d14350 ',
+    border: '1px solid #FFC660 ',
   },
 
   title: {
     textAlign: 'center',
     marginBottom: '1.5rem',
-    color: '#d14350 ',
+    color: '#FFC660 ',
     fontFamily: 'Playfair Display, serif',
     fontSize: '2rem',
     textShadow: '0 0 10px rgba(255, 105, 180, 0.3)',
@@ -147,7 +147,7 @@ const styles = {
     padding: '0.9rem',
     marginBottom: '1.2rem',
     borderRadius: '10px',
-    border: '1px solid #d14350',
+    border: '1px solid #FFC660',
     fontSize: '1rem',
     backgroundColor: '#000',
     color: '#fff',
@@ -157,7 +157,7 @@ const styles = {
 
   button: {
     width: '100%',
-    backgroundColor: '#d14350 ',
+    backgroundColor: '#FFC660 ',
     color: '#000',
     padding: '0.9rem',
     borderRadius: '12px',

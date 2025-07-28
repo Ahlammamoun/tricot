@@ -11,27 +11,29 @@ export function CartProvider({ children }) {
   const { user } = useAuth();
   const [cart, setCart] = useState([]);
   const [storageKey, setStorageKey] = useState("cart_guest");
+  const [isInitialized, setIsInitialized] = useState(false); // 👈
 
-  // ⚠️ Attend que le user soit disponible pour changer la clé
+  // ⏳ Charger le panier uniquement après avoir déterminé l'utilisateur
   useEffect(() => {
     const key = user?.id ? `cart_${user.id}` : "cart_guest";
-    setStorageKey(key);
-
     const stored = localStorage.getItem(key);
     setCart(stored ? JSON.parse(stored) : []);
-  }, [user]);
+    setStorageKey(key);
+    setIsInitialized(true); // ✅ autorise le stockage après init
+  }, [user?.id]);
 
+  // 💾 Sauvegarder dans localStorage uniquement après init
   useEffect(() => {
-    if (storageKey) {
+    if (isInitialized && storageKey) {
       localStorage.setItem(storageKey, JSON.stringify(cart));
     }
-  }, [cart, storageKey]);
+  }, [cart, storageKey, isInitialized]);
 
   const addToCart = (product) => {
-    setCart(prev => {
-      const existing = prev.find(p => p.id === product.id);
+    setCart((prev) => {
+      const existing = prev.find((p) => p.id === product.id);
       if (existing) {
-        return prev.map(p =>
+        return prev.map((p) =>
           p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
         );
       }
@@ -40,7 +42,7 @@ export function CartProvider({ children }) {
   };
 
   const removeFromCart = (id) => {
-    setCart(prev => prev.filter(p => p.id !== id));
+    setCart((prev) => prev.filter((p) => p.id !== id));
   };
 
   const clearCart = () => {

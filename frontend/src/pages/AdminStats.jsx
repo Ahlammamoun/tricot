@@ -20,48 +20,39 @@ const AdminStats = () => {
   if (loading) return <p style={styles.loading}>Chargement des statistiques...</p>;
   if (!stats) return <p style={styles.error}>Aucune statistique disponible.</p>;
 
+  const data = [
+    { label: "Produits en catalogue", value: stats.produits },
+    { label: "Commandes passées", value: stats.commandes },
+    { label: "Utilisateurs inscrits", value: stats.utilisateurs },
+    { label: "Utilisateurs actifs (30j)", value: stats.utilisateursRecents },
+    { label: "Avis clients", value: stats.avis },
+    { label: "Total des ventes (€)", value: stats.totalVentes.toFixed(2) },
+    { label: "Quantité totale vendue", value: stats.quantiteTotaleVendue },
+    { label: "Stock total disponible", value: stats.stockTotal },
+    { label: "Produit le plus vendu", value: stats.produitPlusVendu || "N/A" },
+    { label: "Qté du plus vendu", value: stats.quantitePlusVendue },
+  ];
+
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>📊 Tableau de bord administrateur</h2>
-
-      <div style={styles.tableWrapper}>
-        <table style={styles.table}>
-          <thead>
-            <tr style={styles.headerRow}>
-              <th style={styles.headerCell}>Métrique</th>
-              <th style={styles.headerCell}>Valeur</th>
-            </tr>
-          </thead>
-          <tbody>
-            <StatRow label="Produits en catalogue" value={stats.produits} />
-            <StatRow label="Commandes passées" value={stats.commandes} />
-            <StatRow label="Utilisateurs inscrits" value={stats.utilisateurs} />
-            <StatRow label="Utilisateurs actifs (30j)" value={stats.utilisateursRecents} />
-            <StatRow label="Avis clients" value={stats.avis} />
-            <StatRow label="Total des ventes (€)" value={stats.totalVentes.toFixed(2)} />
-            <StatRow label="Quantité totale vendue" value={stats.quantiteTotaleVendue} />
-            <StatRow label="Stock total disponible" value={stats.stockTotal} />
-            <StatRow label="Produit le plus vendu" value={stats.produitPlusVendu || "N/A"} />
-            <StatRow label="Qté du plus vendu" value={stats.quantitePlusVendue} />
-          </tbody>
-        </table>
+      <div style={styles.statsContainer}>
+        {data.map((item, index) => (
+          <div key={index} style={styles.statItem}>
+            <div style={styles.label}>{item.label}</div>
+            <div style={styles.value}>{item.value}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-const StatRow = ({ label, value }) => (
-  <tr style={styles.row}>
-    <td style={styles.cell}>{label}</td>
-    <td style={styles.cellValue}>{value}</td>
-  </tr>
-);
-
 const styles = {
   container: {
     padding: '2rem',
     fontFamily: 'Poppins, sans-serif',
-    backgroundColor: 'black',
+    backgroundColor: '#000',
     minHeight: '100vh',
   },
   title: {
@@ -70,41 +61,31 @@ const styles = {
     textAlign: 'center',
     color: '#FFC660',
   },
-  tableWrapper: {
-    overflowX: 'auto',
+  statsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    maxWidth: '600px',
+    margin: '0 auto',
   },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
+  statItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '1rem',
     backgroundColor: '#fff',
     borderRadius: '8px',
-    overflow: 'hidden',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
   },
-  headerRow: {
-    backgroundColor: '#ffc660',
-    color: '#222',
-  },
-  headerCell: {
-    padding: '1rem',
-    fontWeight: 'bold',
+  label: {
     fontSize: '1rem',
-    textAlign: 'left',
-    borderBottom: '1px solid #ddd',
+    fontWeight: '500',
+    color: '#444',
   },
-  row: {
-    borderBottom: '1px solid #eee',
-  },
-  cell: {
-    padding: '1rem',
-    fontSize: '1rem',
-    color: '#333',
-  },
-  cellValue: {
-    padding: '1rem',
+  value: {
     fontSize: '1.1rem',
     fontWeight: 'bold',
-    color: '#d14350',
+    color: '#D14350',
   },
   loading: {
     textAlign: 'center',

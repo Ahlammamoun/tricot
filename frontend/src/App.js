@@ -24,6 +24,8 @@ import AdminContact from './pages/AdminContact';
 import AdminAvis from './pages/AdminAvis';
 import MentionsLegales from './pages/MentionsLegales';
 import CGV from './pages/CGV';
+import AdminInformation from './pages/AdminInformation';
+
 
 function App() {
   return (
@@ -87,6 +89,14 @@ function App() {
                 element={
                   <PrivateRoute adminOnly>
                     <AdminAvis />
+                  </PrivateRoute>
+                }
+              />
+                <Route
+                path="/admin/information"
+                element={
+                  <PrivateRoute adminOnly>
+                    <AdminInformation />
                   </PrivateRoute>
                 }
               />

@@ -6,6 +6,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [avis, setAvis] = useState([]);
+  const [informations, setInformations] = useState([]);
+
 
   useEffect(() => {
     fetch('/api/produits/')
@@ -34,11 +36,27 @@ const Home = () => {
       .catch(err => console.error(err));
   }, []);
 
+
+  useEffect(() => {
+    fetch('/api/informations/') // Remplace par l’URL correcte si tu es en prod ou en Docker
+      .then((response) => response.json())
+      .then((data) => {
+        setInformations(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Erreur lors du chargement des informations :', error);
+        setLoading(false);
+      });
+  }, []);
+
   const colors = [
     '#ec9898', '#e39867', '#e1da67', '#cee568', '#90e568',
     '#6ae3b1', '#6adee3', '#6aa7e3', '#b87dea', '#e386f0',
     '#f7aedc', '#f7aec5'
   ];
+
+
 
   return (
     <div style={styles.bodyWrapper}>
@@ -171,16 +189,16 @@ const Home = () => {
       </div>
 
       <div style={styles.infoSection}>
-        <h2 style={styles.sectionTitle}>🛍️ Qui sommes-nous ?</h2>
-        <p style={styles.infoText}>
-          Bienvenue dans notre univers ! Nous sommes une entreprise dédiée à la vente de produits soigneusement sélectionnés, alliant qualité, originalité et passion.
-        </p>
-        <p style={styles.infoText}>
-          Notre mission est simple : proposer des produits utiles, esthétiques et accessibles, tout en plaçant la satisfaction client au cœur de nos priorités.
-        </p>
-        <p style={styles.infoText}>
-          Nous croyons en une consommation responsable, en valorisant l’artisanat, les circuits courts et les matériaux durables. Merci de faire partie de notre aventure 💖
-        </p>
+
+        {informations.map((info) => (
+
+          <div key={info.id}>
+            <h2 style={styles.sectionTitle}>🛍️ {info.titre}</h2>
+            <p style={styles.infoText}>{info.text}</p>
+            <p style={styles.infoText}>{info.textDeux}</p>
+            <p style={styles.infoText}>{info.textTrois}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
